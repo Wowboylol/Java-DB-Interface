@@ -8,6 +8,7 @@
 package gui;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -34,6 +35,9 @@ public class SearchUser extends JPanel
     private JRadioButton coolNo;
     private JRadioButton coolYes;
     private ButtonGroup coolGroup;
+    private JButton searchButton;
+    private JButton clearButton;
+    private JLabel result;
 
     public SearchUser(GuiHandler guiHandler)
     {
@@ -133,6 +137,26 @@ public class SearchUser extends JPanel
         coolGroup = new ButtonGroup();
         coolGroup.add(coolNo);
         coolGroup.add(coolYes);
+
+        searchButton = new JButton("Search");
+        searchButton.setFont(new Font("Arial", Font.PLAIN, 15));
+        searchButton.setSize(100, 20);
+        searchButton.setLocation(150, 300);
+        // searchButton.addActionListener(this);
+        this.add(searchButton);
+
+        clearButton = new JButton("Clear");
+        clearButton.setFont(new Font("Arial", Font.PLAIN, 15));
+        clearButton.setSize(100, 20);
+        clearButton.setLocation(275, 300);
+        // clearButton.addActionListener(this);
+        this.add(clearButton);
+
+        result = new JLabel("");
+        result.setFont(new Font("Arial", Font.PLAIN, 20));
+        result.setSize(500, 25);
+        result.setLocation(100, 350);
+        this.add(result);
     }
 
     public void display()
