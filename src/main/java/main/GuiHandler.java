@@ -6,24 +6,21 @@
 */
 
 package main;
+
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import gui.*;
 
 public class GuiHandler
 {
-    private static final int DEFAULT_SCREEN_WIDTH = 960;
-    private static final int DEFAULT_SCREEN_HEIGHT = 720;
+    public static final int DEFAULT_SCREEN_WIDTH = 960;
+    public static final int DEFAULT_SCREEN_HEIGHT = 720;
     private static GuiHandler instance = null;
     private JFrame window = new JFrame();
-    private NavigationBar navBar = new NavigationBar();
-
-    public static GuiHandler getInstance()
-    {
-        if (instance == null) { instance = new GuiHandler(); }
-        return instance;
-    }
+    private NavigationBar navBar = new NavigationBar(this);
+    private JPanel currentPanel;
 
     private GuiHandler()
     {
@@ -39,5 +36,19 @@ public class GuiHandler
         window.setTitle("Java Database Interface");
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+    }
+
+    public static GuiHandler getInstance()
+    {
+        if (instance == null) { instance = new GuiHandler(); }
+        return instance;
+    }
+
+    public void panelSwap(JPanel addPanel)
+    {
+        if(currentPanel != null) { window.remove(currentPanel); }
+        window.add(addPanel);
+        window.revalidate();
+        window.repaint();
     }
 }
