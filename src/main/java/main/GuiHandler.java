@@ -47,6 +47,7 @@ public class GuiHandler
     public void panelSwap(JPanel addPanel)
     {
         if(currentPanel != null) { window.remove(currentPanel); }
+        currentPanel = addPanel;
         window.add(addPanel);
         window.revalidate();
         window.repaint();

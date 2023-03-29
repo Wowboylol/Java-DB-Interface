@@ -20,6 +20,7 @@ public class NavigationBar extends JMenuBar implements ActionListener
     private JMenu menuSearch, menuFriend, menuReview;
     private JMenuItem menuItemSearchBusiness, menuItemSearchUser;
     private SearchUser searchUser;
+    private SearchBusiness searchBusiness;
 
     public NavigationBar(GuiHandler guiHandler)
     {
@@ -27,6 +28,7 @@ public class NavigationBar extends JMenuBar implements ActionListener
         createMenu();
         createMenuItem();
         searchUser = new SearchUser(guiHandler);
+        searchBusiness = new SearchBusiness(guiHandler);
     }
 
     private void createMenu()
@@ -47,6 +49,8 @@ public class NavigationBar extends JMenuBar implements ActionListener
         menuSearch.add(menuItemSearchUser);
 
         menuItemSearchBusiness = new JMenuItem("Businesses");
+        menuItemSearchBusiness.addActionListener(this);
+        menuItemSearchBusiness.setActionCommand("searchBusiness");
         menuSearch.add(menuItemSearchBusiness);
     }
 
@@ -60,6 +64,10 @@ public class NavigationBar extends JMenuBar implements ActionListener
             case "searchUser":
                 System.out.println("Search User");
                 searchUser.display();
+                break;
+            case "searchBusiness":
+                System.out.println("Search Business");
+                searchBusiness.display();
                 break;
             default:
                 System.out.println("Error: Invalid command");
