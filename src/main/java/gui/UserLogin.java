@@ -25,6 +25,7 @@ public class UserLogin extends JPanel implements ActionListener
     private JLabel userId;
     private JTextField userIdField;
     private JButton loginButton;
+    private JLabel result;
 
     public UserLogin()
     {
@@ -59,6 +60,12 @@ public class UserLogin extends JPanel implements ActionListener
         loginButton.setLocation(400, 320);
         loginButton.addActionListener(this);
         this.add(loginButton);
+
+        result = new JLabel("");
+        result.setFont(new Font("Arial", Font.PLAIN, 20));
+        result.setSize(500, 25);
+        result.setLocation(100, 500);
+        this.add(result);
     }
 
     @Override
@@ -66,7 +73,7 @@ public class UserLogin extends JPanel implements ActionListener
     {
         if(e.getSource() == loginButton)
         {
-            DatabaseHandler.getInstance().login(userIdField.getText());
+            result.setText(DatabaseHandler.getInstance().login(userIdField.getText()));
         }
     }
 }
