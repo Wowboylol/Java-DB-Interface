@@ -1,7 +1,7 @@
 /*  
  *  GuiHandler.java
  *  
- *  Description: Handles all GUI functions.
+ *  Description: Singleton that handles all GUI functions.
  *
 */
 
@@ -20,11 +20,12 @@ public class GuiHandler
     private static GuiHandler instance = null;
     private JFrame window = new JFrame();
     private NavigationBar navBar = new NavigationBar(this);
-    private JPanel currentPanel;
+    private JPanel currentPanel = new UserLogin();
 
     private GuiHandler()
     {
         createWindow();
+        window.add(currentPanel);
         window.setJMenuBar(navBar);
     }
 
