@@ -14,10 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import main.DatabaseHandler;
 import main.GuiHandler;
 
-public class SearchUser extends JPanel
+public class SearchUser extends JPanel implements ActionListener
 {
     private GuiHandler guiHandler;
     private JLabel title;
@@ -142,14 +145,14 @@ public class SearchUser extends JPanel
         searchButton.setFont(new Font("Arial", Font.PLAIN, 15));
         searchButton.setSize(100, 20);
         searchButton.setLocation(150, 300);
-        // searchButton.addActionListener(this);
+        searchButton.addActionListener(this);
         this.add(searchButton);
 
         clearButton = new JButton("Clear");
         clearButton.setFont(new Font("Arial", Font.PLAIN, 15));
         clearButton.setSize(100, 20);
         clearButton.setLocation(275, 300);
-        // clearButton.addActionListener(this);
+        clearButton.addActionListener(this);
         this.add(clearButton);
 
         result = new JLabel("");
@@ -163,5 +166,28 @@ public class SearchUser extends JPanel
     {
         if(title == null) { setupPanel(); }
         guiHandler.panelSwap(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource() == searchButton)
+        {
+            String name = nameField.getText();
+            boolean useful = usefulYes.isSelected();
+            boolean funny = funnyYes.isSelected();
+            boolean cool = coolYes.isSelected();
+            this.result.setText("Searching...");
+            String result = DatabaseHandler.getInstance().searchUser(name, useful, funny, cool);
+            this.result.setText(result);
+        }
+        else if(e.getSource() == clearButton)
+        {
+            nameField.setText("");
+            usefulNo.setSelected(true);
+            funnyNo.setSelected(true);
+            coolNo.setSelected(true);
+            result.setText("");
+        }
     }
 }

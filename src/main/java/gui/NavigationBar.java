@@ -66,11 +66,9 @@ public class NavigationBar extends JMenuBar implements ActionListener
         switch(command)
         {
             case "searchUser":
-                System.out.println("Search User");
                 searchUser.display();
                 break;
             case "searchBusiness":
-                System.out.println("Search Business");
                 searchBusiness.display();
                 break;
             default:
