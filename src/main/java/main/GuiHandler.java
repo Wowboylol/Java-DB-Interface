@@ -20,7 +20,7 @@ public class GuiHandler
     private static GuiHandler instance = null;
     private JFrame window = new JFrame();
     private NavigationBar navBar = new NavigationBar(this);
-    private JPanel currentPanel = new UserLogin();
+    private JPanel currentPanel = new UserLogin(navBar);
 
     private GuiHandler()
     {

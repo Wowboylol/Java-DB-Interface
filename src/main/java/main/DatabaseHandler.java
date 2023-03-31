@@ -71,4 +71,6 @@ public class DatabaseHandler
             return sqlError.getMessage();
         }
     }
+
+    public boolean isLoggedIn() { return (loginId != "" && loginId != null); }
 }

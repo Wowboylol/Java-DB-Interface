@@ -25,10 +25,14 @@ public class NavigationBar extends JMenuBar implements ActionListener
     public NavigationBar(GuiHandler guiHandler)
     {
         super();
-        createMenu();
-        createMenuItem();
         searchUser = new SearchUser(guiHandler);
         searchBusiness = new SearchBusiness(guiHandler);
+    }
+
+    public void enableMenu()
+    {
+        createMenu();
+        createMenuItem();
     }
 
     private void createMenu()

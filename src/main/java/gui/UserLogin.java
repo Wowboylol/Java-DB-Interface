@@ -21,14 +21,16 @@ import java.awt.event.ActionEvent;
 
 public class UserLogin extends JPanel implements ActionListener
 {
+    private NavigationBar navigationBar;
     private JLabel title;
     private JLabel userId;
     private JTextField userIdField;
     private JButton loginButton;
     private JLabel result;
 
-    public UserLogin()
+    public UserLogin(NavigationBar navigationBar)
     {
+        this.navigationBar = navigationBar;
         setupPanel();
     }
 
@@ -74,6 +76,7 @@ public class UserLogin extends JPanel implements ActionListener
         if(e.getSource() == loginButton)
         {
             result.setText(DatabaseHandler.getInstance().login(userIdField.getText()));
+            if(DatabaseHandler.getInstance().isLoggedIn() == true) { navigationBar.enableMenu(); }
         }
     }
 }
