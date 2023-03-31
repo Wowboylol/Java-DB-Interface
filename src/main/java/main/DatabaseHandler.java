@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import models.BusinessModel;
 import models.UserModel;
 
 public class DatabaseHandler 
@@ -27,6 +28,7 @@ public class DatabaseHandler
     private String loginId = "";
     private String loginName = "";
     private ArrayList<UserModel> users = new ArrayList<UserModel>();
+    private ArrayList<BusinessModel> businesses = new ArrayList<BusinessModel>();
 
     private DatabaseHandler()
     {
@@ -105,6 +107,41 @@ public class DatabaseHandler
 
             resultSet.close();
             return "Users found!";
+        }
+        catch(SQLException sqlError) {
+            System.out.println("\nSQL Exception occurred, the state: " + sqlError.getSQLState()+"\nMessage: "+ sqlError.getMessage());
+            return sqlError.getMessage();
+        }
+    }
+
+    public String searchBusiness(String name, String city, int minStars, int maxStars)
+    {
+        try {
+            preparedStatement = connect.prepareStatement(
+                "SELECT * FROM business B WHERE B.name LIKE '%" + name + "%'" +
+                "AND B.city = '" + city + "'" +
+                "AND B.stars >= " + minStars +
+                "AND B.stars <= " + maxStars +
+                "ORDER BY B.name"
+            );
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next() == false) { return "No businesses matching criteria found!"; }
+            businesses.clear();
+            do {
+                BusinessModel tmpBusiness = new BusinessModel(
+                    resultSet.getString("business_id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("address"),
+                    resultSet.getString("city"),
+                    resultSet.getDouble("stars")
+                );
+                businesses.add(tmpBusiness);
+                System.out.println(resultSet.getString("name"));
+            } while(resultSet.next());
+
+            resultSet.close();
+            return "Businesses found!";
         }
         catch(SQLException sqlError) {
             System.out.println("\nSQL Exception occurred, the state: " + sqlError.getSQLState()+"\nMessage: "+ sqlError.getMessage());

@@ -13,10 +13,13 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import main.GuiHandler;
+import main.DatabaseHandler;
 
-public class SearchBusiness extends JPanel
+public class SearchBusiness extends JPanel implements ActionListener
 {
     private GuiHandler guiHandler;
     private JLabel title;
@@ -100,14 +103,14 @@ public class SearchBusiness extends JPanel
         searchButton.setFont(new Font("Arial", Font.PLAIN, 15));
         searchButton.setSize(100, 20);
         searchButton.setLocation(150, 300);
-        // searchButton.addActionListener(this);
+        searchButton.addActionListener(this);
         this.add(searchButton);
 
         clearButton = new JButton("Clear");
         clearButton.setFont(new Font("Arial", Font.PLAIN, 15));
         clearButton.setSize(100, 20);
         clearButton.setLocation(275, 300);
-        // clearButton.addActionListener(this);
+        clearButton.addActionListener(this);
         this.add(clearButton);
 
         result = new JLabel("");
@@ -121,5 +124,34 @@ public class SearchBusiness extends JPanel
     {
         if(title == null) { setupPanel(); }
         guiHandler.panelSwap(this);
+    }
+
+    public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource() == searchButton)
+        {
+            String name = nameField.getText();
+            String city = cityField.getText();
+            int minStars = Integer.parseInt((String)minStarsSelect.getSelectedItem());
+            int maxStars = Integer.parseInt((String)maxStarsSelect.getSelectedItem());
+
+            if(minStars > maxStars)
+            {
+                this.result.setText("Min stars must be less than or equal to max stars.");
+                return;
+            }
+
+            this.result.setText("Searching...");
+            String result = DatabaseHandler.getInstance().searchBusiness(name, city, minStars, maxStars);
+            this.result.setText(result);
+        }
+        else if(e.getSource() == clearButton)
+        {
+            nameField.setText("");
+            cityField.setText("");
+            minStarsSelect.setSelectedIndex(0);
+            maxStarsSelect.setSelectedIndex(0);
+            result.setText("");
+        }
     }
 }
