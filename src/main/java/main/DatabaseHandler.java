@@ -90,8 +90,8 @@ public class DatabaseHandler
             );
 			resultSet = preparedStatement.executeQuery();
 
-            if(resultSet.next() == false) { return "No users matching criteria found!"; }
             users.clear();
+            if(resultSet.next() == false) { return "No users matching criteria found!"; }
             do {
                 UserModel tmpUser = new UserModel(
                     resultSet.getString("user_id"),
@@ -126,8 +126,8 @@ public class DatabaseHandler
             );
             resultSet = preparedStatement.executeQuery();
 
-            if(resultSet.next() == false) { return "No businesses matching criteria found!"; }
             businesses.clear();
+            if(resultSet.next() == false) { return "No businesses matching criteria found!"; }
             do {
                 BusinessModel tmpBusiness = new BusinessModel(
                     resultSet.getString("business_id"),
@@ -141,7 +141,7 @@ public class DatabaseHandler
             } while(resultSet.next());
 
             resultSet.close();
-            return "Businesses found!";
+            return businesses.size() + " businesses found!";
         }
         catch(SQLException sqlError) {
             System.out.println("\nSQL Exception occurred, the state: " + sqlError.getSQLState()+"\nMessage: "+ sqlError.getMessage());

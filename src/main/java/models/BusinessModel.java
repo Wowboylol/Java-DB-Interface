@@ -9,11 +9,11 @@ package models;
 
 public class BusinessModel 
 {
-    String business_id;
-    String name;
-    String address;
-    String city;
-    double stars;
+    public String business_id;
+    public String name;
+    public String address;
+    public String city;
+    public double stars;
 
     public BusinessModel(String business_id, String name, String address, String city, double stars)
     {

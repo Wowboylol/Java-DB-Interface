@@ -260,6 +260,9 @@ public class SearchUser extends JPanel implements ActionListener
             funnyNo.setSelected(true);
             coolNo.setSelected(true);
             result.setText("");
+            searchResultList.removeAll();
+            searchResultList.revalidate();
+            searchResultList.repaint();
         }
     }
 }

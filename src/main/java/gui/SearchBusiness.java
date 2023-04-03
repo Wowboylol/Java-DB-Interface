@@ -7,17 +7,16 @@
 
 package gui;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
+import javax.swing.*;
 import java.awt.Font;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import main.GuiHandler;
 import main.DatabaseHandler;
+import models.BusinessModel;
 
 public class SearchBusiness extends JPanel implements ActionListener
 {
@@ -35,6 +34,7 @@ public class SearchBusiness extends JPanel implements ActionListener
     private JButton searchButton;
     private JButton clearButton;
     private JLabel result;
+    private JPanel searchResultList;
 
     public SearchBusiness(GuiHandler guiHandler)
     {
@@ -118,6 +118,68 @@ public class SearchBusiness extends JPanel implements ActionListener
         result.setSize(500, 25);
         result.setLocation(100, 350);
         this.add(result);
+
+        JScrollPane searchResults = new JScrollPane();
+        searchResults.setLayout(new ScrollPaneLayout());
+        searchResults.setSize(370, 500);
+        searchResults.setLocation(480, 100);
+        searchResults.setAlignmentX(LEFT_ALIGNMENT);
+        searchResults.getVerticalScrollBar().setUnitIncrement(25);
+        this.add(searchResults);
+
+        searchResultList = new JPanel();
+        searchResultList.setLayout(new BoxLayout(searchResultList, BoxLayout.Y_AXIS));
+        searchResultList.setBackground(java.awt.Color.WHITE);
+        searchResults.setViewportView(searchResultList);
+    }
+
+    private void updateSearchResultList()
+    {
+        ArrayList<BusinessModel> businesses = DatabaseHandler.getInstance().getSearchedBusinesses();
+        searchResultList.removeAll();
+        searchResultList.revalidate();
+
+        for(BusinessModel business : businesses)
+        {
+            JButton businessPanelButton = new JButton();
+            businessPanelButton.setLayout(new BoxLayout(businessPanelButton, BoxLayout.X_AXIS));
+            businessPanelButton.setBackground(java.awt.Color.WHITE);
+            businessPanelButton.setMaximumSize(new Dimension(1050, 40));
+            businessPanelButton.setAlignmentX(LEFT_ALIGNMENT);
+
+            JLabel name = new JLabel(business.name);
+            name.setFont(new Font("Arial", Font.PLAIN, 15));
+            name.setSize(200, 20);
+            name.setLocation(0, 0);
+            businessPanelButton.add(name);
+
+            JLabel stars = new JLabel(" | Stars: " + business.stars);
+            stars.setFont(new Font("Arial", Font.PLAIN, 15));
+            stars.setSize(50, 20);
+            stars.setLocation(200, 0);
+            businessPanelButton.add(stars);
+
+            JLabel id = new JLabel(" | ID: " + business.business_id);
+            id.setFont(new Font("Arial", Font.PLAIN, 15));
+            id.setSize(200, 20);
+            id.setLocation(250, 0);
+            businessPanelButton.add(id);
+
+            JLabel address = new JLabel(" | Address: " + business.address);
+            address.setFont(new Font("Arial", Font.PLAIN, 15));
+            address.setSize(400, 20);
+            address.setLocation(450, 0);
+            businessPanelButton.add(address);
+
+            JLabel city = new JLabel(" | City: " + business.city);
+            city.setFont(new Font("Arial", Font.PLAIN, 15));
+            city.setSize(200, 20);
+            city.setLocation(850, 0);
+            businessPanelButton.add(city);
+
+            searchResultList.add(businessPanelButton);
+        }
+        searchResultList.repaint();
     }
 
     public void display()
@@ -144,6 +206,7 @@ public class SearchBusiness extends JPanel implements ActionListener
             this.result.setText("Searching...");
             String result = DatabaseHandler.getInstance().searchBusiness(name, city, minStars, maxStars);
             this.result.setText(result);
+            updateSearchResultList();
         }
         else if(e.getSource() == clearButton)
         {
@@ -152,6 +215,9 @@ public class SearchBusiness extends JPanel implements ActionListener
             minStarsSelect.setSelectedIndex(0);
             maxStarsSelect.setSelectedIndex(0);
             result.setText("");
+            searchResultList.removeAll();
+            searchResultList.revalidate();
+            searchResultList.repaint();
         }
     }
 }
