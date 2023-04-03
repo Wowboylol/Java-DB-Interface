@@ -7,18 +7,18 @@
 
 package gui;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.Font;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.text.SimpleDateFormat;  
 
 import main.DatabaseHandler;
 import main.GuiHandler;
+import models.UserModel;
 
 public class SearchUser extends JPanel implements ActionListener
 {
@@ -41,6 +41,7 @@ public class SearchUser extends JPanel implements ActionListener
     private JButton searchButton;
     private JButton clearButton;
     private JLabel result;
+    private JPanel searchResultList;
 
     public SearchUser(GuiHandler guiHandler)
     {
@@ -160,6 +161,75 @@ public class SearchUser extends JPanel implements ActionListener
         result.setSize(500, 25);
         result.setLocation(100, 350);
         this.add(result);
+
+        JScrollPane searchResults = new JScrollPane();
+        searchResults.setLayout(new ScrollPaneLayout());
+        searchResults.setSize(370, 500);
+        searchResults.setLocation(480, 100);
+        searchResults.setAlignmentX(CENTER_ALIGNMENT);
+        this.add(searchResults);
+
+        searchResultList = new JPanel();
+        searchResultList.setLayout(new BoxLayout(searchResultList, BoxLayout.Y_AXIS));
+        searchResultList.setBackground(java.awt.Color.WHITE);
+        searchResults.setViewportView(searchResultList);
+    }
+
+    private void updateSearchResultList()
+    {
+        ArrayList<UserModel> searchedUsers = DatabaseHandler.getInstance().getSearchedUsers();
+        searchResultList.removeAll();
+        searchResultList.revalidate();
+
+        for(UserModel user : searchedUsers)
+        {
+            JButton userPanelButton = new JButton();
+            userPanelButton.setLayout(new BoxLayout(userPanelButton, BoxLayout.X_AXIS));
+            userPanelButton.setBackground(java.awt.Color.WHITE);
+            userPanelButton.setMaximumSize(new Dimension(800, 40));
+            userPanelButton.setAlignmentX(CENTER_ALIGNMENT);
+
+            JLabel name = new JLabel(user.name);
+            name.setFont(new Font("Arial", Font.PLAIN, 15));
+            name.setSize(200, 20);
+            name.setLocation(0, 0);
+            userPanelButton.add(name);
+
+            JLabel id = new JLabel(" | ID: " + user.userId);
+            id.setFont(new Font("Arial", Font.PLAIN, 15));
+            id.setSize(200, 20);
+            id.setLocation(200, 0);
+            userPanelButton.add(id);
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            JLabel date = new JLabel(" | Date: " + dateFormat.format(user.yelping_since));
+            date.setFont(new Font("Arial", Font.PLAIN, 15));
+            date.setSize(100, 20);
+            date.setLocation(400, 0);
+            userPanelButton.add(date);
+
+            JLabel useful = new JLabel(" | Useful: " + (user.useful > 0 ? "yes" : "no"));
+            useful.setFont(new Font("Arial", Font.PLAIN, 15));
+            useful.setSize(100, 20);
+            useful.setLocation(500, 0);
+            userPanelButton.add(useful);
+
+            JLabel funny = new JLabel(" | Funny: " + (user.funny > 0 ? "yes" : "no"));
+            funny.setFont(new Font("Arial", Font.PLAIN, 15));
+            funny.setSize(100, 20);
+            funny.setLocation(600, 0);
+            userPanelButton.add(funny);
+
+            JLabel cool = new JLabel(" | Cool: " + (user.cool > 0 ? "yes" : "no"));
+            cool.setFont(new Font("Arial", Font.PLAIN, 15));
+            cool.setSize(100, 20);
+            cool.setLocation(700, 0);
+            userPanelButton.add(cool);
+
+            searchResultList.add(userPanelButton);
+        }
+
+        searchResultList.repaint();
     }
 
     public void display()
@@ -180,6 +250,7 @@ public class SearchUser extends JPanel implements ActionListener
             this.result.setText("Searching...");
             String result = DatabaseHandler.getInstance().searchUser(name, useful, funny, cool);
             this.result.setText(result);
+            updateSearchResultList();
         }
         else if(e.getSource() == clearButton)
         {

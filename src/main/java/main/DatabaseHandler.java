@@ -106,7 +106,7 @@ public class DatabaseHandler
 			} while(resultSet.next());
 
             resultSet.close();
-            return "Users found!";
+            return users.size() + " users found!";
         }
         catch(SQLException sqlError) {
             System.out.println("\nSQL Exception occurred, the state: " + sqlError.getSQLState()+"\nMessage: "+ sqlError.getMessage());
@@ -150,4 +150,6 @@ public class DatabaseHandler
     }
 
     public boolean isLoggedIn() { return (loginId != "" && loginId != null); }
+    public ArrayList<UserModel> getSearchedUsers() { return users; }
+    public ArrayList<BusinessModel> getSearchedBusinesses() { return businesses; }
 }
