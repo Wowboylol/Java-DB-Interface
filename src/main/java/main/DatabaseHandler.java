@@ -102,7 +102,7 @@ public class DatabaseHandler
                     resultSet.getInt("cool")
                 );
                 users.add(tmpUser);
-                System.out.println(resultSet.getString("name"));
+                // System.out.println(resultSet.getString("name"));
 			} while(resultSet.next());
 
             resultSet.close();
@@ -142,6 +142,22 @@ public class DatabaseHandler
 
             resultSet.close();
             return "Businesses found!";
+        }
+        catch(SQLException sqlError) {
+            System.out.println("\nSQL Exception occurred, the state: " + sqlError.getSQLState()+"\nMessage: "+ sqlError.getMessage());
+            return sqlError.getMessage();
+        }
+    }
+
+    public String sendFriendRequest(String userId)
+    {
+        try {
+            preparedStatement = connect.prepareStatement(
+                "INSERT INTO friendship VALUES ('" + loginId + "', '" + userId + "')"
+            );
+            preparedStatement.executeUpdate();
+
+            return "Friend with id: " + userId + " added!";
         }
         catch(SQLException sqlError) {
             System.out.println("\nSQL Exception occurred, the state: " + sqlError.getSQLState()+"\nMessage: "+ sqlError.getMessage());

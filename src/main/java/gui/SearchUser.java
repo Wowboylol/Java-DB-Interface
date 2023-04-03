@@ -158,7 +158,7 @@ public class SearchUser extends JPanel implements ActionListener
 
         result = new JLabel("");
         result.setFont(new Font("Arial", Font.PLAIN, 20));
-        result.setSize(500, 25);
+        result.setSize(300, 80);
         result.setLocation(100, 350);
         this.add(result);
 
@@ -166,7 +166,8 @@ public class SearchUser extends JPanel implements ActionListener
         searchResults.setLayout(new ScrollPaneLayout());
         searchResults.setSize(370, 500);
         searchResults.setLocation(480, 100);
-        searchResults.setAlignmentX(CENTER_ALIGNMENT);
+        searchResults.setAlignmentX(LEFT_ALIGNMENT);
+        searchResults.getVerticalScrollBar().setUnitIncrement(25);
         this.add(searchResults);
 
         searchResultList = new JPanel();
@@ -183,7 +184,7 @@ public class SearchUser extends JPanel implements ActionListener
 
         for(UserModel user : searchedUsers)
         {
-            JButton userPanelButton = new JButton();
+            JButton userPanelButton = new FriendUserButton(result, user);
             userPanelButton.setLayout(new BoxLayout(userPanelButton, BoxLayout.X_AXIS));
             userPanelButton.setBackground(java.awt.Color.WHITE);
             userPanelButton.setMaximumSize(new Dimension(800, 40));
