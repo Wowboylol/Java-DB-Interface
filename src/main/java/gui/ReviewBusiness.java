@@ -75,7 +75,7 @@ public class ReviewBusiness extends JPanel implements ActionListener
 
         result = new JLabel("");
         result.setFont(new Font("Arial", Font.PLAIN, 20));
-        result.setSize(500, 25);
+        result.setSize(500, 100);
         result.setLocation(100, 250);
         this.add(result);
     }
