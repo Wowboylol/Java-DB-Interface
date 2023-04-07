@@ -21,6 +21,7 @@ import models.BusinessModel;
 public class SearchBusiness extends JPanel implements ActionListener
 {
     private GuiHandler guiHandler;
+    private NavigationBar navBar;
     private JLabel title;
     private JLabel name;
     private JTextField nameField;
@@ -36,9 +37,10 @@ public class SearchBusiness extends JPanel implements ActionListener
     private JLabel result;
     private JPanel searchResultList;
 
-    public SearchBusiness(GuiHandler guiHandler)
+    public SearchBusiness(GuiHandler guiHandler, NavigationBar navBar)
     {
         this.guiHandler = guiHandler;
+        this.navBar = navBar;
     }
 
     private void setupPanel()
@@ -141,7 +143,7 @@ public class SearchBusiness extends JPanel implements ActionListener
 
         for(BusinessModel business : businesses)
         {
-            JButton businessPanelButton = new JButton();
+            JButton businessPanelButton = new ReviewBusinessButton(business, navBar);
             businessPanelButton.setLayout(new BoxLayout(businessPanelButton, BoxLayout.X_AXIS));
             businessPanelButton.setBackground(java.awt.Color.WHITE);
             businessPanelButton.setMaximumSize(new Dimension(1050, 40));

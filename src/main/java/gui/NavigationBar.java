@@ -27,7 +27,7 @@ public class NavigationBar extends JMenuBar implements ActionListener
     {
         super();
         searchUser = new SearchUser(guiHandler);
-        searchBusiness = new SearchBusiness(guiHandler);
+        searchBusiness = new SearchBusiness(guiHandler, this);
         reviewBusiness = new ReviewBusiness(guiHandler);
     }
 
@@ -85,5 +85,11 @@ public class NavigationBar extends JMenuBar implements ActionListener
                 System.out.println("Error: Invalid command");
                 break;
         }
+    }
+
+    public void redirectToReviewBusiness(String businessId)
+    {
+        reviewBusiness.display();
+        reviewBusiness.changeBusinessIdField(businessId);
     }
 }

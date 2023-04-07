@@ -10,11 +10,10 @@ package gui;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import main.DatabaseHandler;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import main.DatabaseHandler;
 import models.UserModel;
 
 public class FriendUserButton extends JButton implements ActionListener

@@ -94,8 +94,10 @@ public class ReviewBusiness extends JPanel implements ActionListener
             int reviewScore = Integer.parseInt((String)reviewScoreSelect.getSelectedItem());
 
             this.result.setText("Searching...");
-            String result = DatabaseHandler.getInstance().reviewBusiness(businessId, reviewScore);
-            this.result.setText(result);
+            String res = DatabaseHandler.getInstance().reviewBusiness(businessId, reviewScore);
+            this.result.setText("<html>" + res + "</html>");
         }
     }
+
+    public void changeBusinessIdField(String id) { businessIdField.setText(id); }
 }
