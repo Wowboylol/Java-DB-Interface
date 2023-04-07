@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import models.BusinessModel;
 import models.UserModel;
@@ -54,6 +55,22 @@ public class DatabaseHandler
             System.out.println("Failed to connect to database: " + sqlError.getMessage());
             return;
         }
+    }
+
+    private String generateRandomId()
+    {
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 22;
+        Random random = new Random();
+        StringBuilder buffer = new StringBuilder(targetStringLength);
+        for (int i = 0; i < targetStringLength; i++) {
+            int randomLimitedInt = leftLimit + (int)
+                (random.nextFloat() * (rightLimit - leftLimit + 1));
+            buffer.append((char) randomLimitedInt);
+        }
+        String reviewId = buffer.toString();
+        return reviewId;
     }
 
     public String login(String userId)
@@ -158,6 +175,29 @@ public class DatabaseHandler
             preparedStatement.executeUpdate();
 
             return "Friend with id: " + userId + " added!";
+        }
+        catch(SQLException sqlError) {
+            System.out.println("\nSQL Exception occurred, the state: " + sqlError.getSQLState()+"\nMessage: "+ sqlError.getMessage());
+            return sqlError.getMessage();
+        }
+    }
+
+    public String reviewBusiness(String businessId, int stars)
+    {
+        try {
+            String reviewId = generateRandomId();
+            preparedStatement = connect.prepareStatement(
+                "INSERT INTO review VALUES ('" + reviewId + "', '" 
+                + loginId + "', '" 
+                + businessId + "', '" 
+                + stars + "', " 
+                + "DEFAULT, " + "DEFAULT, "
+                + "DEFAULT, " + "DEFAULT)"
+            );
+            preparedStatement.executeUpdate();
+
+            System.out.println("Review added with id: " + reviewId + "!");
+            return "Review added with id: " + reviewId + "!";
         }
         catch(SQLException sqlError) {
             System.out.println("\nSQL Exception occurred, the state: " + sqlError.getSQLState()+"\nMessage: "+ sqlError.getMessage());

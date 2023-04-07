@@ -9,9 +9,9 @@ package gui;
 
 import javax.swing.*;
 
+import main.DatabaseHandler;
 import main.GuiHandler;
 import java.awt.Font;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,7 +21,7 @@ public class ReviewBusiness extends JPanel implements ActionListener
     private JLabel title;
     private JLabel businessId;
     private JTextField businessIdField;
-    private String stars[] = {"0", "1", "2", "3", "4", "5"};
+    private String stars[] = {"1", "2", "3", "4", "5"};
     private JLabel reviewScore;
     private JComboBox<String> reviewScoreSelect;
     private JButton submitButton;
@@ -70,7 +70,7 @@ public class ReviewBusiness extends JPanel implements ActionListener
         submitButton.setFont(new Font("Arial", Font.PLAIN, 15));
         submitButton.setSize(100, 20);
         submitButton.setLocation(220, 200);
-        // submitButton.addActionListener(this);
+        submitButton.addActionListener(this);
         this.add(submitButton);
 
         result = new JLabel("");
@@ -92,8 +92,10 @@ public class ReviewBusiness extends JPanel implements ActionListener
         {
             String businessId = businessIdField.getText();
             int reviewScore = Integer.parseInt((String)reviewScoreSelect.getSelectedItem());
-            // String resultText = guiHandler.submitReview(businessId, reviewScore);
-            // result.setText(resultText);
+
+            this.result.setText("Searching...");
+            String result = DatabaseHandler.getInstance().reviewBusiness(businessId, reviewScore);
+            this.result.setText(result);
         }
     }
 }

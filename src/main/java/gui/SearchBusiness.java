@@ -26,7 +26,7 @@ public class SearchBusiness extends JPanel implements ActionListener
     private JTextField nameField;
     private JLabel city;
     private JTextField cityField;
-    private String stars[] = {"0", "1", "2", "3", "4", "5"};
+    private String stars[] = {"1", "2", "3", "4", "5"};
     private JLabel minStars;
     private JComboBox<String> minStarsSelect;
     private JLabel maxStars;
