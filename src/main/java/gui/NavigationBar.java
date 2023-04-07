@@ -17,7 +17,7 @@ import main.GuiHandler;
 
 public class NavigationBar extends JMenuBar implements ActionListener
 {
-    private JMenu menuSearch, menuFriend, menuReview;
+    private JMenu menuSearch, menuReview;
     private JMenuItem menuItemSearchBusiness, menuItemSearchUser, menuItemReviewBusiness;
     private SearchUser searchUser;
     private SearchBusiness searchBusiness;
@@ -40,10 +40,8 @@ public class NavigationBar extends JMenuBar implements ActionListener
     private void createMenu()
     {
         menuSearch = new JMenu("Search");
-        menuFriend = new JMenu("Friend");
         menuReview = new JMenu("Review");
         this.add(menuSearch);
-        this.add(menuFriend);
         this.add(menuReview);
     }
 
