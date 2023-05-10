@@ -24,8 +24,8 @@ public class DatabaseHandler
     private Connection connect = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
-    private String username = "s_lsa105";
-    private String password = "P3yd27fFmTJ6Q43Q";
+    private String username = "---";
+    private String password = "---";
     private String loginId = "";
     private String loginName = "";
     private ArrayList<UserModel> users = new ArrayList<UserModel>();
